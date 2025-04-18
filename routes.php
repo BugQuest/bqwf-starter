@@ -2,7 +2,7 @@
 
 use App\Controllers\DocController;
 use App\Controllers\HomeController;
-use App\Controllers\TestController;
+use BugQuest\Framework\Middleware\PopulateAuthMiddleware;
 use BugQuest\Framework\Models\Route;
 use BugQuest\Framework\Models\RouteGroup;
 use BugQuest\Framework\Services\View;
@@ -11,20 +11,13 @@ new Route(
     name: 'home',
     _slug: '/',
     _callback: HomeController::class . '::index',
-    _methods: ['GET']
-)->register();
-
-new RouteGroup(
-    name: 'test',
-    _prefix: '/test',
-    _routes: [
-        new Route(
-            name: 'images',
-            _slug: '/images',
-            _callback: TestController::class . '::images',
-            _methods: ['GET']
-        )
-    ]
+    _methods: ['GET'],
+    _middlewares: [
+        PopulateAuthMiddleware::class
+    ],
+    _cache_key: 'home',
+    _cache_group: 'home',
+    _cache_ttl: 3600
 )->register();
 
 new RouteGroup(
@@ -39,7 +32,19 @@ new RouteGroup(
             _cache_key: 'doc.cache',
             _cache_group: 'doc',
             _cache_ttl: 3600
+        ),
+        new Route(
+            name: 'images',
+            _slug: '/images',
+            _callback: DocController::class . '::images',
+            _methods: ['GET'],
+            _cache_key: 'doc.images',
+            _cache_group: 'doc',
+            _cache_ttl: 3600
         )
+    ],
+    _middlewares: [
+        PopulateAuthMiddleware::class
     ]
 )->register();
 

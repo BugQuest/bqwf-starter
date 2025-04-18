@@ -4,14 +4,19 @@ const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
 
 module.exports = {
     entry: {
-        'dist/css/app': './Assets/scss/app.scss',
-        'dist/js/app': './Assets/js/app.js',
-        'admin/dist/js/admin-options-test': './Assets/js/admin-options-test.js',
+        'dist/css/app': '@/scss/app.scss',
+        'dist/js/app': '@/js/app.js',
+        'admin/dist/js/admin-options-test': '@/js/admin-options-test.js',
+        'admin/dist/css/admin': '@framework/scss/admin.scss',
+        'admin/dist/css/admin-light': '@framework/scss/admin-light.scss',
+        'admin/dist/js/admin': '@framework/js/admin.js',
+        'admin/dist/js/admin-options-images': '@framework/js/admin-options-images.js',
+        'dist/js/global': '@framework/js/global.js'
     },
     resolve: {
         alias: {
+            '@framework': path.resolve(__dirname, '../vendor/bugquest/web-framework/Assets/'),
             '@': path.resolve(__dirname, './Assets/'),
-            '@framework': path.resolve(__dirname, '../vendor/bugquest/web-framework/Assets/')
         },
         extensions: ['.js', '.scss'], // facultatif
     },
