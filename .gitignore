@@ -1,0 +1,60 @@
+# === Node.js ===
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# === Composer ===
+vendor/
+composer.lock
+
+# === Build / Webpack ===
+/htdocs/cms/dist/
+/htdocs/cms/*.map
+
+# === Cache / Logs / Sessions / Uploads ===
+storage/cache/
+storage/logs/
+storage/sessions/
+storage/uploads/
+storage/*.log
+
+# === Environnement ===
+.env
+.env.*.local
+
+# === IDEs / OS files ===
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# === PHP ===
+*.log
+*.cache
+*.php~  # fichiers temporaires
+phpunit.xml
+phpunit.result.cache
+
+# === Twig ===
+/App/Views/cache/
+
+# === Tests ===
+coverage/
+.phpunit.result.cache
+
+# === Miscellaneous ===
+*.bak
+*.tmp
+*.orig
+
+# === Custom media/cache folders ===
+htdocs/cache/images/
+htdocs/cache/thumbnails/
+htdocs/cache/*
+
+# === Lock frontend builds ===
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
