@@ -1,0 +1,11 @@
+{% extends '@app/layout.twig' %}
+
+{% block title %}{{ title | raw }}{% endblock %}
+
+{% block content %}
+    <style>
+        {{ style|raw }}
+    </style>
+    {{ body|raw }}
+
+{% endblock %}

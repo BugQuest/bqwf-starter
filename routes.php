@@ -2,6 +2,7 @@
 
 use App\Controllers\DocController;
 use App\Controllers\HomeController;
+use App\Controllers\PageController;
 use BugQuest\Framework\Middleware\PopulateAuthMiddleware;
 use BugQuest\Framework\Models\Route;
 use BugQuest\Framework\Models\RouteGroup;
@@ -18,6 +19,15 @@ new Route(
     _cache_key: 'home',
     _cache_group: 'home',
     _cache_ttl: 3600
+)->register();
+
+new Route(
+    name: 'page',
+    _callback: PageController::class . '::index',
+    _methods: ['GET'],
+    _middlewares: [
+        PopulateAuthMiddleware::class
+    ]
 )->register();
 
 new RouteGroup(
