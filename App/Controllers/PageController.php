@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use BugQuest\Framework\Models\Response;
+use BugQuest\Framework\PageBuilder\BlockRegistry;
 use BugQuest\Framework\Services\PageService;
 use BugQuest\Framework\Services\View;
 
@@ -15,7 +16,7 @@ class PageController
 
         return Response::view('@app/page.twig',[
             'page' => PageService::getCurrent(),
-            'body' => PageService::getBodyHtml(),
+            'body' => PageService::getCurrent()?->parseBlocks(),
             'style' => PageService::getStyle(),
             'title' => PageService::getCurrent()?->title,
             'breadcrumbs' => PageService::getCurrent()?->breadcrumbs(),
