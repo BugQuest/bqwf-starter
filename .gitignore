@@ -50,9 +50,8 @@ coverage/
 *.orig
 
 # === Custom media/cache folders ===
-htdocs/cache/images/
-htdocs/cache/thumbnails/
 htdocs/cache/*
+htdocs/medias/*
 
 # === Lock frontend builds ===
 package-lock.json
