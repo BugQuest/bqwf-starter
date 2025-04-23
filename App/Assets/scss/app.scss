@@ -1,5 +1,6 @@
-@use '../../../vendor/bugquest/web-framework/Assets/scss/components/accordeon';
-@use '../../../vendor/bugquest/web-framework/Assets/scss/components/language-switcher';
+@use '@framework/scss/components/accordeon';
+@use '@framework/scss/components/language-switcher';
+@use "@framework/scss/components/debug-panel";
 
 .site-vitrine {
   font-family: 'Segoe UI', sans-serif;

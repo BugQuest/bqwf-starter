@@ -4,6 +4,8 @@
 
 use Dotenv\Dotenv;
 
+define('BQ_START_TIME', microtime(true));
+define('BQ_START_MEMORY', memory_get_usage(true));
 const DS = DIRECTORY_SEPARATOR;
 const BQ_ROOT = __DIR__;
 const BQ_FRAMEWORK_PATH = BQ_ROOT . DS . 'vendor' . DS . 'bugquest' . DS . 'web-framework';
@@ -35,7 +37,7 @@ function env(string $key, $default = null)
  * returns the path to the storage directory with the given path appended
  * if path not exists, it will be created
  */
-function storage(string $path): string
+function storage(string $path = ''): string
 {
     $storagePath = BQ_STORAGE_DIR . DS . $path;
 

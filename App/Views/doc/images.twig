@@ -1,0 +1,149 @@
+{% extends '@app/layout.twig' %}
+
+{% block title %}Test des tailles d’images{% endblock %}
+
+{% block content %}
+    <div class="image-test-page">
+        <h1>🖼️ Test des tailles d’images générées</h1>
+
+        <div class="compression-info">
+            <p><strong>Compression active :</strong>
+                {% if compression_method == 'webp' %}
+                    <span class="badge webp">WebP</span>
+                {% elseif compression_method == 'avif' %}
+                    <span class="badge avif">AVIF</span>
+                {% else %}
+                    <span class="badge none">Aucune</span>
+                {% endif %}
+            </p>
+
+            <ul>
+                <li><strong>WebP :</strong> format moderne avec compression efficace, supporté par la majorité des
+                    navigateurs.
+                </li>
+                <li><strong>AVIF :</strong> format ultra-léger, qualité élevée, support partiel sur certains
+                    navigateurs.
+                </li>
+                <li><strong>Aucune :</strong> l’image conserve son extension d’origine sans compression.</li>
+            </ul>
+        </div>
+
+        {# if test_image is null #}
+        {% if test_image is null %}
+            <div class="compression-info">
+                <p><strong>Image de test non trouvée.</strong></p>
+                <p>Veuillez vérifier que l'image de test est bien configurée dans la page de configuration de test dans
+                    l'admin.</p>
+            </div>
+        {% else %}
+            <div class="image-test-grid">
+                <div class="image-test-item">
+                    <div class="preview-header">
+                        <h3>Placeholder</h3>
+                    </div>
+
+                    <div class="image-test-preview">
+                        {{ getImageHtml('', 'thumbnail', 'thumbnail', {loading:'lazy'}) | raw }}
+                        {{ getImageHtml('', 'medium', 'medium', {loading:'lazy'}) | raw }}
+                    </div>
+                    <p>
+                        Il s'affiche quand le media n'est pas disponible. dans la taille demandée.
+                    </p>
+                </div>
+                <div class="image-test-item">
+                    <div class="preview-header">
+                        <h3>Original</h3>
+                    </div>
+
+                    <div class="image-test-preview">
+                        {{ test_image.imageHtml('original', 'original', {loading:'lazy'}) | raw }}
+                    </div>
+
+                    {% embed '@framework/admin/partials/components/accordeon.twig' with { title: '📘 Twig / PHP Image Helpers', class: '' } %}
+                        {% block accordeon_content %}
+                            <div class="image-doc">
+                                <div class="doc-block">
+                                    <h4>📄 HTML (Image complete)</h4>
+                                    <pre><code>{{ "{{ getImageHtml(test_image, 'original', 'original', {loading:'lazy'}) | raw }}" }}</code></pre>
+                                    <pre><code>{{ "{{ test_image.imageHtml('original', 'original', {loading:'lazy'}) | raw }}" }}</code></pre>
+                                </div>
+
+                                <div class="doc-separator">⎯⎯⎯⎯⎯⎯⎯</div>
+
+                                <div class="doc-block">
+                                    <h4>🌐 URL (Lien direct)</h4>
+                                    <pre><code>{{ "{{ getImageUrl(test_image, 'original') }}" }}</code></pre>
+                                    <pre><code>{{ "{{ test_image.imageUrl('original') }}" }}</code></pre>
+
+                                    <p><strong>Résultat :</strong> <code>{{ test_image.imageUrl('original') }}</code>
+                                    </p>
+                                </div>
+
+                                <div class="doc-separator">⎯⎯⎯⎯⎯⎯⎯</div>
+
+                                <div class="doc-block">
+                                    <h4>🗂️ URL absolue</h4>
+                                    <pre><code>{{ "{{ getImageUrl(test_image, 'original', true) }}" }}</code></pre>
+                                    <pre><code>{{ "{{ test_image.imageUrl('original', true) }}" }}</code></pre>
+
+                                    <p><strong>Résultat :</strong>
+                                        <code>{{ test_image.imageUrl('original', true) }}</code>
+                                    </p>
+                                </div>
+                            </div>
+                        {% endblock %}
+                    {% endembed %}
+
+                </div>
+                {% for name, size in sizes %}
+                    <div class="image-test-item">
+                        <div class="preview-header">
+                            <h3>{{ name|title }}</h3>
+                            <small>{{ size.width }}x{{ size.height }} {% if size.crop %}(Crop){% endif %}</small>
+                        </div>
+
+                        <div class="image-test-preview">
+                            {{ test_image.imageHtml(name, name, {loading:'lazy'}) | raw }}
+                        </div>
+
+                        {% embed '@framework/admin/partials/components/accordeon.twig' with { title: '📘 Twig / PHP Image Helpers', class: '' } %}
+                            {% block accordeon_content %}
+                                <div class="image-doc">
+                                    <div class="doc-block">
+                                        <h4>📄 HTML (Image complete)</h4>
+                                        <pre><code>{{ "{{ getImageHtml(test_image, '"~name~"', '"~name~"', {loading:'lazy'}) | raw }}" }}</code></pre>
+                                        <pre><code>{{ "{{ test_image.imageHtml('"~name~"', '"~name~"', {loading:'lazy'}) | raw }}" }}</code></pre>
+                                    </div>
+
+                                    <div class="doc-separator">⎯⎯⎯⎯⎯⎯⎯</div>
+
+                                    <div class="doc-block">
+                                        <h4>🌐 URL (Lien direct)</h4>
+                                        <pre><code>{{ "{{ getImageUrl(test_image, '"~name~"') }}" }}</code></pre>
+                                        <pre><code>{{ "{{ test_image.imageUrl('"~name~"') }}" }}</code></pre>
+
+                                        <p><strong>Résultat :</strong> <code>{{ test_image.imageUrl(name) }}</code></p>
+                                    </div>
+
+                                    <div class="doc-separator">⎯⎯⎯⎯⎯⎯⎯</div>
+
+                                    <div class="doc-block">
+                                        <h4>🗂️ URL absolue</h4>
+                                        <pre><code>{{ "{{ getImageUrl(test_image, '"~name~"', true) }}" }}</code></pre>
+                                        <pre><code>{{ "{{ test_image.imageUrl('"~name~"', true) }}" }}</code></pre>
+
+                                        <p><strong>Résultat :</strong>
+                                            <code>{{ test_image.imageUrl(name, true) }}</code>
+                                        </p>
+                                    </div>
+                                </div>
+                            {% endblock %}
+                        {% endembed %}
+                    </div>
+                {% else %}
+                    <p>Aucune taille définie dans le service Image.</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
