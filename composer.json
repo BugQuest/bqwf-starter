@@ -1,0 +1,40 @@
+{
+  "name": "bugquest/web-framework-exemple",
+  "description": "BugQuest Web Framework exemple",
+  "keywords": [
+    "bugquest",
+    "framework"
+  ],
+  "authors": [
+    {
+      "name": "Realitynauts"
+    }
+  ],
+  "type": "project",
+  "config": {
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "optimize-autoloader": true,
+    "allow-plugins": {
+      "composer/installers": true,
+      "php-http/discovery": true
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "repositories": {
+    "bugquest/web-framework": {
+      "type": "git",
+      "url": "git@github.com:BugQuest/web-framework.git"
+    }
+  },
+  "require": {
+    "php": "^8.4",
+    "bugquest/web-framework": "dev-main"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "App/"
+    }
+  }
+}

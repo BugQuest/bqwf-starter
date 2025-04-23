@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}BugQuest — Le framework PHP moderne{% endblock %}</title>
+    {{ bq_assets_header('app') }}
+</head>
+<body class="site-vitrine">
+
+<header class="hero">
+    <div class="container">
+        <h1 class="hero-title">🐞 BugQuest Web Framework</h1>
+        <p class="hero-subtitle">Un framework PHP moderne, léger et extensible.</p>
+        <a href="/docs" class="hero-cta">📚 Lire la documentation</a>
+    </div>
+</header>
+
+<nav class="top-nav">
+    <div class="container">
+        <a href="/">Accueil</a>
+        <a href="/docs">Documentation</a>
+        <a href="/admin">Panneau admin</a>
+        <a href="/contact">Contact</a>
+    </div>
+</nav>
+
+<main class="content">
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <p>&copy; {{ "now"|date("Y") }} BugQuest — Fait avec ❤️</p>
+    </div>
+</footer>
+{{ bq_assets_footer('app') }}
+</body>
+</html>

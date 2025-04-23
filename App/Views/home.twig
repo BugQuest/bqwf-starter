@@ -1,0 +1,60 @@
+{% extends '@app/layout.twig' %}
+
+{% block title %}BugQuest — Le framework PHP simple et extensible{% endblock %}
+
+{% block content %}
+
+    <section class="section-intro">
+        <h2>🚀 Pourquoi BugQuest ?</h2>
+        <p>BugQuest est un framework PHP conçu pour offrir une base solide, légère et extensible pour vos applications
+            web modernes. Il intègre une architecture claire, une interface d'administration élégante, et une structure
+            flexible qui vous permet d'aller vite sans vous enfermer.</p>
+    </section>
+
+    <section class="section-features">
+        <h2>✨ Fonctionnalités clés</h2>
+        <div class="features-grid">
+            <div class="feature">
+                <h3>🧱 Structure modulaire</h3>
+                <p>Découpage clair entre les vues, les routes, les contrôleurs, les services et les modèles.</p>
+            </div>
+            <div class="feature">
+                <h3>🛠️ Administration intégrée</h3>
+                <p>Un panneau d’administration personnalisable avec gestion des médias, options, utilisateurs et bien
+                    plus.</p>
+            </div>
+            <div class="feature">
+                <h3>🧩 Composants JS modernes</h3>
+                <p>Un ensemble de composants front-end réactifs, facilement extensibles (accordéons, tooltips,
+                    modales...)</p>
+            </div>
+            <div class="feature">
+                <h3>🌍 Système de traduction</h3>
+                <p>Un système de localisation multi-domaines dynamique avec chargement des traductions par
+                    JavaScript.</p>
+            </div>
+            <div class="feature">
+                <h3>🧙‍♂️ Gestion des options</h3>
+                <p>Un service d’options avec mise en cache, groupes et pages de configuration dynamiques.</p>
+            </div>
+            <div class="feature">
+                <h3>📷 Service Image avancé</h3>
+                <p>Resize automatique, fallback intelligent, génération AVIF/WebP, système de cache performant.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-cta">
+        <h2>📚 Envie d’en voir plus ?</h2>
+        <p>
+            Consultez la documentation, explorez l’interface admin, ou commencez dès maintenant votre projet avec
+            <strong>BugQuest Web Framework.</strong>
+        </p>
+        <div class="cta-buttons">
+            <a href="/docs" class="button primary">📘 Documentation</a>
+            <a href="/admin" class="button">🔐 Interface Admin</a>
+            <a href="https://github.com/BugQuest/web-framework" class="button secondary" target="_blank">⭐ Github</a>
+        </div>
+    </section>
+
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends '@app/layout.twig' %}
+
+{% block title %}BugQuest — Le framework PHP simple et extensible{% endblock %}
+
+{% block content %}
+
+    <div class="doc-section">
+        <h2>📦 Cache Service</h2>
+        <p>
+            Le service <code>Cache</code> permet de stocker des données dans des fichiers PHP compilés, organisés par
+            groupe.
+            Il est optimisé pour la performance, sans recours à la sérialisation lente.
+        </p>
+
+        <h3>🔑 Fonctions principales</h3>
+        <ul>
+            <li><code>Cache::put(key, value, ttl, group)</code> — Enregistre une donnée avec expiration.</li>
+            <li><code>Cache::get(key, default, group)</code> — Récupère une valeur ou retourne une valeur par défaut.
+            </li>
+            <li><code>Cache::remember(key, ttl, callback, group)</code> — Stocke le retour d’un callback si la clé
+                n’existe
+                pas.
+            </li>
+            <li><code>Cache::forever(key, callback, group)</code> — Même chose, mais sans expiration.</li>
+            <li><code>Cache::forget(key, group)</code> — Supprime une entrée du cache.</li>
+            <li><code>Cache::all(group)</code> — Retourne toutes les données d’un groupe.</li>
+            <li><code>Cache::list(group)</code> — Liste détaillée avec métadonnées.</li>
+        </ul>
+
+        <h3>📁 Groupes</h3>
+        <p>Les données sont stockées dans <code>/storage/cache/{group}/</code> pour mieux organiser les blocs de cache.
+        </p>
+
+        <h3>🧠 Exemple simple</h3>
+        <pre><code>
+Cache::put('homepage.hero', ['title' => 'Bienvenue !'], 3600, 'homepage');
+
+$hero = Cache::get('homepage.hero', [], 'homepage');
+    </code></pre>
+
+        <h3>⏳ Exemple avec rappel automatique</h3>
+        <pre><code>
+$settings = Cache::remember('site.settings', 3600, function() {
+    return Settings::load();
+}, 'config');
+    </code></pre>
+
+        <h3>♾️ Stockage permanent</h3>
+        <pre><code>
+$config = Cache::forever('site.config', fn() => loadConfig(), 'config');
+    </code></pre>
+
+        <h3>🧼 Suppression d’un cache</h3>
+        <pre><code>
+Cache::forget('homepage.hero', 'homepage');
+    </code></pre>
+
+        <h3>🗂️ Liste avec détails</h3>
+        <pre><code>
+$items = Cache::list('homepage');
+
+foreach ($items as $item) {
+    echo $item['key'] . ' (' . $item['size'] . ' octets)';
+}
+    </code></pre>
+    </div>
+
+{% endblock %}
