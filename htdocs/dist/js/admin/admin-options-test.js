@@ -81,7 +81,7 @@ class MediaGallery {
       this.tag_submit.addEventListener('click', e => {
         e.preventDefault();
         this.deletionMode = false;
-        tagDeleteBtn.classList.remove('active');
+        this.tagDeleteBtn.classList.remove('active');
         this.search = '';
         this.updateTags();
         const tag = this.tag_input.value.trim();
@@ -105,8 +105,8 @@ class MediaGallery {
     });
     tags_actions.appendChild(search);
     if (this.canEditTags) {
-      const tagDeleteBtn = this.buildTagDeleteToggle();
-      tags_actions.appendChild(tagDeleteBtn);
+      this.tagDeleteBtn = this.buildTagDeleteToggle();
+      tags_actions.appendChild(this.tagDeleteBtn);
     }
 
     //====== TAGS CONTENT ======
@@ -434,9 +434,8 @@ class MediaModalViewer {
       this.gallery.loadPage();
       this.waitingTags = [];
       this.deletionMode = false;
-      content.innerHTML = '';
     });
-    document.body.appendChild(this.modal);
+    document.body.appendChild(this.modal.element);
   }
   async open(media) {
     if (!media) return;
