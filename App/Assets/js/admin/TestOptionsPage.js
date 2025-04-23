@@ -167,6 +167,17 @@ export class TestOptionsPage extends OptionsPage {
             }
         );
 
+        // WIP : RepeaterBlock - Pas encore fonctionnel
+        // const faq = this.createBlock('repeater', 'faq', 'Questions fréquentes', [
+        //     {question: 'Titre ?', answer: 'Réponse ici.'}
+        // ], {
+        //     blocks: [
+        //         {type: 'string', key: 'question', label: 'Question'},
+        //         {type: 'wysiwig', key: 'answer', label: 'Réponse'},
+        //     ]
+        // });
+
+
         new OptionGroup(__('Group 1', 'admin'),
             [
                 intBlock,
@@ -204,5 +215,11 @@ export class TestOptionsPage extends OptionsPage {
                 wysiwygBlock
             ]
         ).render(this.container);
+
+        // new OptionGroup(__('Group 6', 'admin'),
+        //     [
+        //         faq
+        //     ]
+        // ).render(this.container);
     }
 }

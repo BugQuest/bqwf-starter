@@ -757,6 +757,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+// import {RepeaterBlock} from '@framework/js/options/RepeaterBlock.js';
+
 class BlockFactory {
   static types = {
     int: _IntBlock_js__WEBPACK_IMPORTED_MODULE_0__.IntBlock,
@@ -767,6 +769,7 @@ class BlockFactory {
     bool: _framework_js_options_BoolBlock_js__WEBPACK_IMPORTED_MODULE_5__.BoolBlock,
     textarea: _framework_js_options_TextareaBlock_js__WEBPACK_IMPORTED_MODULE_6__.TextareaBlock,
     wysiwig: _framework_js_options_WysiwygBlock__WEBPACK_IMPORTED_MODULE_7__.WysiwygBlock
+    // repeater: RepeaterBlock, // WIP : RepeaterBlock - Pas encore fonctionnel
   };
   static register(type, clazz) {
     this.types[type] = clazz;
@@ -22731,11 +22734,28 @@ class TestOptionsPage extends _framework_js_options_OptionsPage__WEBPACK_IMPORTE
       //     ['link', 'clean']
       // ]
     });
+
+    // WIP : RepeaterBlock - Pas encore fonctionnel
+    // const faq = this.createBlock('repeater', 'faq', 'Questions fréquentes', [
+    //     {question: 'Titre ?', answer: 'Réponse ici.'}
+    // ], {
+    //     blocks: [
+    //         {type: 'string', key: 'question', label: 'Question'},
+    //         {type: 'wysiwig', key: 'answer', label: 'Réponse'},
+    //     ]
+    // });
+
     new _framework_js_options_OptionGroup__WEBPACK_IMPORTED_MODULE_1__.OptionGroup((0,_framework_js_services_Translator__WEBPACK_IMPORTED_MODULE_3__.__)('Group 1', 'admin'), [intBlock, floatBlock, stringBlock, passwordBlock]).render(this.container);
     new _framework_js_options_OptionGroup__WEBPACK_IMPORTED_MODULE_1__.OptionGroup((0,_framework_js_services_Translator__WEBPACK_IMPORTED_MODULE_3__.__)('Group 2', 'admin'), [boolBlock, selectBlock]).render(this.container);
     new _framework_js_options_OptionGroup__WEBPACK_IMPORTED_MODULE_1__.OptionGroup((0,_framework_js_services_Translator__WEBPACK_IMPORTED_MODULE_3__.__)('Group 3', 'admin'), [mediaBlock, mediaBlockImg, mediaBlockVideo, mediaBlockAudio, mediaBlockSvg]).render(this.container);
     new _framework_js_options_OptionGroup__WEBPACK_IMPORTED_MODULE_1__.OptionGroup((0,_framework_js_services_Translator__WEBPACK_IMPORTED_MODULE_3__.__)('Group 4', 'admin'), [textareaBlock]).render(this.container);
     new _framework_js_options_OptionGroup__WEBPACK_IMPORTED_MODULE_1__.OptionGroup((0,_framework_js_services_Translator__WEBPACK_IMPORTED_MODULE_3__.__)('Group 5', 'admin'), [wysiwygBlock]).render(this.container);
+
+    // new OptionGroup(__('Group 6', 'admin'),
+    //     [
+    //         faq
+    //     ]
+    // ).render(this.container);
   }
 }
 
