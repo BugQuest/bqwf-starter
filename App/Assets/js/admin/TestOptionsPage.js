@@ -79,6 +79,21 @@ export class TestOptionsPage extends OptionsPage {
             }
         );
 
+        const selectMultipleBlock = this.createBlock(
+            'select_multiple',
+            'test_select_multiple_value',
+            __('Sélection multiple', 'admin'),
+            null,
+            {
+                description: __('Sélectionnez plusieurs options', 'admin'),
+                options: [
+                    {value: 'option1', label: 'Option 1'},
+                    {value: 'option2', label: 'Option 2'},
+                    {value: 'option3', label: 'Option 3'},
+                ]
+            }
+        );
+
         const urlBlock = this.createBlock(
             'url',
             'test_url_value',
@@ -205,6 +220,7 @@ export class TestOptionsPage extends OptionsPage {
             [
                 boolBlock,
                 selectBlock,
+                selectMultipleBlock,
                 urlBlock
             ]
         ).render(this.container);
