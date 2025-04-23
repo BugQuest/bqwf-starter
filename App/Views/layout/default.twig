@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="{{ bq_locale() }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}BugQuest — Le framework PHP moderne{% endblock %}</title>
+    {{ bq_assets_header('app') }}
+</head>
+<body>
+<div class="page-wrapper">
+    <header>
+        <h1>{{ block('title') }}</h1>
+        {% block header %}{% endblock %}
+    </header>
+    <main class="main">
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; {{ "now"|date("Y") }} BugQuest — Fait avec ❤️</p>
+        </div>
+    </footer>
+</div>
+{{ bq_assets_footer('app') }}
+</body>
+</html>

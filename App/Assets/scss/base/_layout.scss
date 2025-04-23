@@ -1,0 +1,157 @@
+// 📦 Structure globale de l'application
+
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f7f7f9;
+}
+
+// 🧱 En-tête
+header {
+  background-color: #1a1a2e;
+  color: white;
+  padding: 1rem 2rem;
+
+  h1 {
+    font-size: 2rem;
+    margin: 2rem 1rem;
+    text-align: center;
+    color: #fff;
+  }
+
+  .logo {
+    font-weight: bold;
+    font-size: 1.25rem;
+  }
+
+  nav {
+    a {
+      color: #fff;
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: 500;
+
+      &:hover {
+        color: #0ff;
+      }
+    }
+  }
+}
+
+// 🧭 Barre latérale
+.sidebar {
+  background-color: #222;
+  color: #eee;
+  padding: 2rem 1rem;
+  width: 250px;
+  min-height: 100vh;
+  position: sticky;
+  top: 0;
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      margin-bottom: 1rem;
+
+      a {
+        color: #ccc;
+        text-decoration: none;
+
+        &:hover {
+          color: #0ff;
+        }
+      }
+    }
+  }
+}
+
+// 📄 Contenu principal
+.main {
+  flex: 1;
+  padding: 2rem;
+  background-color: #fff;
+}
+
+// 📚 Breadcrumb
+.breadcrumb {
+  display: block;
+  margin: 2rem 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #666;
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 0.75rem;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &::after {
+      content: '›';
+      color: #aaa;
+      font-size: 0.85em;
+    }
+
+    &:last-child::after {
+      content: '';
+    }
+  }
+
+  a {
+    text-decoration: none;
+    color: #007bff;
+    transition: color 0.3s;
+
+    &:hover {
+      color: #0056b3;
+      text-decoration: underline;
+    }
+  }
+
+  span {
+    font-weight: bold;
+    color: #aaa;
+  }
+}
+
+
+// 🦶 Footer
+footer {
+  background-color: #1a1a2e;
+  color: #aaa;
+  text-align: center;
+  padding: 1rem;
+  margin-top: auto;
+}
+
+// 🪟 Layout responsive (stack sur mobile)
+@media (max-width: 768px) {
+  .page-wrapper {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    position: relative;
+    min-height: auto;
+  }
+
+  .main {
+    padding: 1rem;
+  }
+
+  header nav a {
+    margin-left: 0.5rem;
+  }
+}

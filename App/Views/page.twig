@@ -1,14 +1,16 @@
-{% extends '@app/layout.twig' %}
+{% extends '@app/layout/default.twig' %}
 
 {% block title %}{{ title | raw }}{% endblock %}
 
-{% block content %}
+{% block header %}
     {% include '@app/partials/breadcrumb.twig' with {
         items: breadcrumbs
     } %}
+{% endblock %}
+
+{% block content %}
     <style>
         {{ style|raw }}
     </style>
     {{ body|raw }}
-
 {% endblock %}
