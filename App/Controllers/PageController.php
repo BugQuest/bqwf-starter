@@ -18,6 +18,7 @@ class PageController
             'body' => PageService::getBodyHtml(),
             'style' => PageService::getStyle(),
             'title' => PageService::getCurrent()?->title,
+            'breadcrumbs' => PageService::getCurrent()?->breadcrumbs(),
         ]);
     }
 }

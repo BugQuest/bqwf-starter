@@ -1,0 +1,13 @@
+<nav class="breadcrumb" aria-label="Fil d'Ariane">
+    <ul>
+        {% for item in items %}
+            <li>
+                {% if item.slug and not loop.last %}
+                    <a href="/{{ item.slug }}">{{ item.title }}</a>
+                {% else %}
+                    <span>{{ item.title }}</span>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</nav>

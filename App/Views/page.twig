@@ -3,6 +3,9 @@
 {% block title %}{{ title | raw }}{% endblock %}
 
 {% block content %}
+    {% include '@app/partials/breadcrumb.twig' with {
+        items: breadcrumbs
+    } %}
     <style>
         {{ style|raw }}
     </style>
