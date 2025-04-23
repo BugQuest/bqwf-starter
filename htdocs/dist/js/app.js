@@ -297,6 +297,41 @@ class Builder {
     });
     return select;
   }
+  static table(head = [], body = [], className = '', headClassName = '', bodyClassName = '') {
+    let table = document.createElement('table');
+    if (className) table.className = className;
+    let thead = document.createElement('thead');
+    let tbody = document.createElement('tbody');
+    if (head.length > 0) {
+      head.forEach(item => {
+        let th = document.createElement('th');
+        th.textContent = item;
+        if (headClassName) th.className = headClassName;
+        thead.appendChild(th);
+      });
+    }
+    if (body.length > 0) {
+      body.forEach(item => {
+        let tr = document.createElement('tr');
+        item.forEach(cell => {
+          let td = document.createElement('td');
+          if (typeof cell === 'object' && cell !== null && 'value' in cell && 'full' in cell) {
+            td.textContent = cell.value;
+            td.title = cell.full;
+            td.classList.add('truncated'); // on l’utilisera pour le CSS
+          } else {
+            td.textContent = cell;
+          }
+          if (bodyClassName) td.className = bodyClassName;
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+      });
+    }
+    table.appendChild(thead);
+    table.appendChild(tbody);
+    return table;
+  }
 }
 
 /***/ }),
@@ -361,8 +396,6 @@ class DebugPanel {
     await this.loadMetrics();
     this.kvSection = _framework_js_services_Builder__WEBPACK_IMPORTED_MODULE_0__["default"].div('kv-section');
     this.kvWrap = _framework_js_services_Builder__WEBPACK_IMPORTED_MODULE_0__["default"].div('wrap');
-    const kvTitle = _framework_js_services_Builder__WEBPACK_IMPORTED_MODULE_0__["default"].h4('Debug Infos dynamiques');
-    this.kvSection.append(kvTitle, this.kvWrap);
     this.panel.appendChild(this.kvSection);
     this.kvValues = {}; // pour stocker les refs HTML des valeurs
 
@@ -434,13 +467,58 @@ class DebugPanel {
     const wrap = _framework_js_services_Builder__WEBPACK_IMPORTED_MODULE_0__["default"].div('wrap');
     accordeon_content.appendChild(wrap);
     this.panel.appendChild(accordeon);
-    for (const item_key in group) {
-      const item = group[item_key];
-      const item_div = _framework_js_services_Builder__WEBPACK_IMPORTED_MODULE_0__["default"].div('debug-line');
-      item_div.innerHTML = `${item_key}: ${item}`;
-      wrap.appendChild(item_div);
+    if (Array.isArray(group)) {
+      // Cas spécial tableau (ex: queries SQL)
+      if (group_key === 'queries') {
+        const head = ['SQL', 'Bindings', 'Durée'];
+        const body = group.map(row => {
+          const time = parseFloat(row.time);
+          const displayTime = time >= 1000 ? `${(time / 1000).toFixed(3)} s` : `${time.toFixed(2)} ms`;
+          return [{
+            value: row.query,
+            full: row.query
+          },
+          // pour title
+          row.bindings.map(b => `"${b}"`).join(', '), displayTime];
+        });
+        const totalTime = group.reduce((sum, row) => sum + parseFloat(row.time), 0);
+        const displayTotal = totalTime >= 1000 ? `${(totalTime / 1000).toFixed(3)} s` : `${totalTime.toFixed(2)} ms`;
+
+        // Construction du tableau via Builder.table
+        const table = _framework_js_services_Builder__WEBPACK_IMPORTED_MODULE_0__["default"].table(head, body, 'debug-table');
+
+        // Ajout du tfoot
+        const tfoot = document.createElement('tfoot');
+        const tr = document.createElement('tr');
+        const tdLabel = document.createElement('td');
+        tdLabel.textContent = 'Total';
+        tdLabel.colSpan = 2;
+        const tdTotal = document.createElement('td');
+        tdTotal.textContent = displayTotal;
+        tr.append(tdLabel, tdTotal);
+        tfoot.appendChild(tr);
+        table.appendChild(tfoot);
+        wrap.appendChild(table);
+        return;
+      }
+
+      // Autres tableaux si besoin (logs, appels API, etc.)
+      group.forEach((item, index) => {
+        const div = _framework_js_services_Builder__WEBPACK_IMPORTED_MODULE_0__["default"].div('debug-line');
+        div.textContent = `${index}: ${JSON.stringify(item)}`;
+        wrap.appendChild(div);
+      });
+    } else {
+      // Cas classique objet clé: valeur
+      for (const item_key in group) {
+        const item = group[item_key];
+        const item_div = _framework_js_services_Builder__WEBPACK_IMPORTED_MODULE_0__["default"].div('debug-line');
+        item_div.innerHTML = `${item_key}: ${item}`;
+        wrap.appendChild(item_div);
+      }
     }
   }
+  static renderQueries() {}
   static async loadMetrics() {
     await fetch('/admin/api/debug/metrics').then(r => r.json()).then(data => {
       if (!data) return;

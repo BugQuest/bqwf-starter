@@ -57,6 +57,121 @@
   box-shadow: 0 0 8px cyan;
 }
 
+.bq-toast-container {
+  position: fixed;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  pointer-events: none;
+  padding: 1rem;
+}
+.bq-toast-container.top-right {
+  top: 0;
+  right: 0;
+  align-items: flex-end;
+}
+.bq-toast-container.top-left {
+  top: 0;
+  left: 0;
+  align-items: flex-start;
+}
+.bq-toast-container.bottom-right {
+  bottom: 0;
+  right: 0;
+  align-items: flex-end;
+}
+.bq-toast-container.bottom-left {
+  bottom: 0;
+  left: 0;
+  align-items: flex-start;
+}
+.bq-toast-container.top-center {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  align-items: center;
+}
+.bq-toast-container.bottom-center {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  align-items: center;
+}
+
+.bq-toast {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #111827;
+  color: #fff;
+  border: 1px solid rgba(0, 255, 255, 0.2666666667);
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.15);
+  max-width: 320px;
+  min-width: 200px;
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+}
+.bq-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.bq-toast .bq-toast-icon {
+  font-size: 1.2rem;
+}
+.bq-toast .bq-toast-message {
+  flex: 1;
+  line-height: 1.3;
+}
+.bq-toast .bq-toast-close {
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+  padding: 0;
+}
+.bq-toast .bq-toast-close:hover {
+  opacity: 1;
+}
+.bq-toast.success {
+  border-color: #22c55e;
+  background: rgba(34, 197, 94, 0.1);
+  color: #bbf7d0;
+}
+.bq-toast.error {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+  color: #fecaca;
+}
+.bq-toast.info {
+  border-color: #3b82f6;
+  background: rgba(59, 130, 246, 0.1);
+  color: #bfdbfe;
+}
+.bq-toast.warning {
+  border-color: #facc15;
+  background: rgba(250, 204, 21, 0.1);
+  color: #fde68a;
+}
+.bq-toast.primary {
+  border-color: cyan;
+  background: rgba(0, 255, 255, 0.1);
+  color: cyan;
+}
+.bq-toast.secondary {
+  border-color: #64748b;
+  background: rgba(100, 116, 139, 0.1);
+  color: #cbd5e1;
+}
+
 .debug-panel {
   position: fixed;
   background: #111;
@@ -64,7 +179,6 @@
   border-top: 4px solid rgba(0, 255, 255, 0.4);
   padding: 1rem;
   z-index: 9999;
-  max-width: 300px;
   display: none;
   transition: box-shadow 0.2s;
   top: 50%;
@@ -118,6 +232,36 @@
 }
 .debug-panel .debug-line strong {
   color: #ffcc00;
+}
+.debug-panel .debug-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  max-height: 400px;
+  overflow: auto;
+}
+.debug-panel .debug-table th, .debug-panel .debug-table td {
+  border: 1px solid #999;
+  padding: 6px 10px;
+  font-size: 13px;
+  font-family: monospace;
+}
+.debug-panel .debug-table td.truncated {
+  max-width: 400px;
+  overflow: auto;
+}
+.debug-panel .debug-table th {
+  background-color: #222;
+  text-align: left;
+  color: rgba(0, 255, 255, 0.4);
+  font-weight: bold;
+}
+.debug-panel .debug-table tr:nth-child(even) {
+  background-color: #333;
+}
+.debug-panel .debug-table tfoot td {
+  font-weight: bold;
+  background-color: #222;
 }
 
 html, body {
