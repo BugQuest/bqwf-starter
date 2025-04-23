@@ -1,2 +1,685 @@
-(()=>{var t={295:()=>{document.addEventListener("DOMContentLoaded",(()=>{const t=document.getElementById("langSelect");t&&t.addEventListener("change",(()=>{const e=t.value;document.cookie=`bq_locale=${e};path=/;max-age=31536000;SameSite=Lax`,location.reload()}))}))}},e={};function n(s){var a=e[s];if(void 0!==a)return a.exports;var i=e[s]={exports:{}};return t[s](i,i.exports,n),i.exports}(()=>{"use strict";class t{static setup(e=".accordeon"){document.addEventListener("click",(n=>{const s=n.target.closest(`${e} .accordeon-title`);if(!s)return;const a=s.closest(e),i=a.querySelector(".accordeon-content");i&&t.toggle(a,i)}))}static toggle(t,e){if(t.classList.contains("active"))e.style.maxHeight=e.scrollHeight+"px",e.offsetHeight,e.style.maxHeight="0",t.classList.remove("active");else{e.style.maxHeight=e.scrollHeight+"px",t.classList.add("active");const n=()=>{t.classList.contains("active")&&(e.style.maxHeight="none"),e.removeEventListener("transitionend",n)};e.addEventListener("transitionend",n)}}}n(295);class e{static accordion(t,e){let n=document.createElement("div");n.className="__accordeon accordeon",e&&n.classList.add(e);let s=document.createElement("div");s.className="__accordeon_title accordeon-title",s.textContent=t,n.appendChild(s);let a=document.createElement("div");return a.className="accordeon-content",n.appendChild(a),{accordeon:n,accordeon_content:a}}static glow_stick(){let t=document.createElement("div");return t.className="glow-bar",t}static input_text(t="",e="",n=""){let s=document.createElement("input");return s.type="text",s.placeholder=t,s.value=e,s.className=n,s}static button_submit(t="Envoyer",e="button button-primary"){let n=document.createElement("button");return n.type="submit",n.className=e,n.textContent=t,n}static button(t="Button",e="button",n=null){let s=document.createElement("div");return s.className=e,s.textContent=t,n&&s.addEventListener("click",n),s}static div(t=""){let e=document.createElement("div");return e.className=t,e}static modal(t="",e=null){let n=this.div("modal"),s=this.div("modal-wrapper"),a=this.div("modal-close"),i=this.div("modal-content");return t&&(this.div("modal-title").textContent=t,n.appendChild("titleElement")),s.appendChild(a),s.appendChild(i),n.appendChild(s),a.addEventListener("click",(()=>{n.classList.remove("active"),e&&e()})),n.addEventListener("click",(t=>{t.target===n&&(n.classList.remove("active"),e&&e())})),{modal:n,content:i,close:a}}static h2(t,e=""){let n=document.createElement("h2");return n.className=e,n.textContent=t,n}static h3(t,e=""){let n=document.createElement("h3");return n.className=e,n.textContent=t,n}static img(t,e="",n=""){let s=document.createElement("img");return s.src=t,s.alt=e,n&&(s.className=n),s}static list(t=[],e=""){let n=document.createElement("ul");return n.className=e,t.forEach((t=>{let e=document.createElement("li");e.innerHTML=t,n.appendChild(e)})),n}static search(t="Rechercher...",e=null,n=null,s=2,a=!1){let i=this.div("search-container"),l=this.input_text(t);l.type="search";let c=this.div("search-results "+(a?" open-bottom":"open-top"));return i.appendChild(l),i.appendChild(c),e&&l.addEventListener("input",(()=>{let t=l.value;t.length>=s?e(t,c):c.innerHTML=""})),n&&c.addEventListener("click",(t=>{let e=t.target.closest(".result-item");e&&n(e)})),i.addEventListener("close",(()=>{c.innerHTML="",l.value=""})),{searchContainer:i,results:c}}static input_search(t="",e="",n=null,s=null,a=2){let i=this.input_text(t,"",e);return i.type="search",i.addEventListener("input",(()=>{let t=i.value;t.length>=a?n(t):s()})),i}}class s{static panel=null;static isDragging=!1;static offset={x:0,y:0};static async init(){this.panel=e.div("debug-panel");const t=e.h3("Debug Panel"),n=e.div("close-btn");if(n.textContent="x",this.panel.append(t,n),document.body.appendChild(this.panel),!this.panel)return;this.restoreFromStorage(),document.addEventListener("keypress",(t=>{178!==t.which&&64!==t.which||(this.panel.classList.toggle("active"),localStorage.setItem("debugPanelActive",this.panel.classList.contains("active")))}));const s=this.panel.querySelector(".close-btn");s&&s.addEventListener("click",(()=>{this.panel.classList.remove("active")})),this.panel.addEventListener("mousedown",this.startDrag.bind(this)),document.addEventListener("mousemove",this.onDrag.bind(this)),document.addEventListener("mouseup",this.stopDrag.bind(this)),await this.loadMetrics(),window.debugPanel=this}static startDrag(t){this.panel.classList.contains("active")&&(this.isDragging=!0,this.offset.x=t.clientX-this.panel.offsetLeft,this.offset.y=t.clientY-this.panel.offsetTop,this.panel.classList.add("dragging"),this.panel.style.transition="none")}static onDrag(t){if(!this.isDragging)return;const e=t.clientX-this.offset.x,n=t.clientY-this.offset.y;this.panel.style.left=`${e}px`,this.panel.style.top=`${n}px`,this.panel.style.bottom="auto",this.panel.style.right="auto",localStorage.setItem("debugPanelPosition",JSON.stringify({x:e,y:n}))}static stopDrag(){this.isDragging&&(this.isDragging=!1,this.panel.classList.remove("dragging"),this.panel.style.transition="")}static restoreFromStorage(){const t=localStorage.getItem("debugPanelActive");this.panel.classList.toggle("active","true"===t);const e=localStorage.getItem("debugPanelPosition");if(e)try{const{x:t,y:n}=JSON.parse(e);this.panel.style.left=`${t}px`,this.panel.style.top=`${n}px`,this.panel.style.bottom="auto",this.panel.style.right="auto"}catch(t){const e=window.innerWidth,n=window.innerHeight,s=(e-this.panel.offsetWidth)/2,a=(n-this.panel.offsetHeight)/2;this.panel.style.left=`${s}px`,this.panel.style.top=`${a}px`,this.panel.style.bottom="auto",this.panel.style.right="auto"}}static addGroup(t,n){const{accordeon:s,accordeon_content:a}=e.accordion(t),i=e.div("wrap");a.appendChild(i),this.panel.appendChild(s);for(const t in n){const s=n[t],a=e.div("debug-line");a.innerHTML=`${t}: ${s}`,i.appendChild(a)}}static async loadMetrics(){await fetch("/admin/api/debug/metrics").then((t=>t.json())).then((t=>{for(const e in t)this.addGroup(e,t[e])}))}}document.addEventListener("DOMContentLoaded",(async()=>{await s.init(),t.setup()}))})()})();
+/******/ (() => { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "../vendor/bugquest/web-framework/Assets/js/components/Accordion.js":
+/*!**************************************************************************!*\
+  !*** ../vendor/bugquest/web-framework/Assets/js/components/Accordion.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Accordion: () => (/* binding */ Accordion)
+/* harmony export */ });
+class Accordion {
+  static setup(selector = '.accordeon') {
+    document.addEventListener('click', e => {
+      const title = e.target.closest(`${selector} .accordeon-title`);
+      if (!title) return;
+      const accordeon = title.closest(selector);
+      const content = accordeon.querySelector('.accordeon-content');
+      if (!content) return;
+      Accordion.toggle(accordeon, content);
+    });
+  }
+  static toggle(accordeon, content) {
+    const isOpen = accordeon.classList.contains('active');
+    if (isOpen) {
+      // Active animation en mesurant la hauteur actuelle
+      content.style.maxHeight = content.scrollHeight + 'px';
+
+      // Forcer un reflow pour garantir la transition
+      void content.offsetHeight;
+      content.style.maxHeight = '0';
+      accordeon.classList.remove('active');
+    } else {
+      content.style.maxHeight = content.scrollHeight + 'px';
+      accordeon.classList.add('active');
+
+      // Nettoyage après animation
+      const onTransitionEnd = () => {
+        if (accordeon.classList.contains('active')) {
+          content.style.maxHeight = 'none';
+        }
+        content.removeEventListener('transitionend', onTransitionEnd);
+      };
+      content.addEventListener('transitionend', onTransitionEnd);
+    }
+  }
+}
+
+/***/ }),
+
+/***/ "../vendor/bugquest/web-framework/Assets/js/components/language-switcher.js":
+/*!**********************************************************************************!*\
+  !*** ../vendor/bugquest/web-framework/Assets/js/components/language-switcher.js ***!
+  \**********************************************************************************/
+/***/ (() => {
+
+document.addEventListener('DOMContentLoaded', () => {
+  const langSelect = document.getElementById('langSelect');
+  if (langSelect) {
+    langSelect.addEventListener('change', () => {
+      const locale = langSelect.value;
+      document.cookie = `bq_locale=${locale};path=/;max-age=31536000;SameSite=Lax`;
+      location.reload();
+    });
+  }
+});
+
+/***/ }),
+
+/***/ "../vendor/bugquest/web-framework/Assets/js/services/Builder.js":
+/*!**********************************************************************!*\
+  !*** ../vendor/bugquest/web-framework/Assets/js/services/Builder.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Builder)
+/* harmony export */ });
+class Builder {
+  static accordion(title, subclass) {
+    let accordeon = document.createElement('div');
+    accordeon.className = '__accordeon accordeon';
+    if (subclass) accordeon.classList.add(subclass);
+    let accordeon_title = document.createElement('div');
+    accordeon_title.className = '__accordeon_title accordeon-title';
+    accordeon_title.textContent = title;
+    accordeon.appendChild(accordeon_title);
+    let accordeon_content = document.createElement('div');
+    accordeon_content.className = 'accordeon-content';
+    accordeon.appendChild(accordeon_content);
+    return {
+      accordeon,
+      accordeon_content
+    };
+  }
+  static glow_stick() {
+    let glow_stick = document.createElement('div');
+    glow_stick.className = 'glow-bar';
+    return glow_stick;
+  }
+  static label(text = '', className = '') {
+    let label = document.createElement('label');
+    if (className) label.className = className;
+    if (text) label.textContent = text;
+    return label;
+  }
+  static input_text(placeholder = '', value = '', className = '') {
+    let input = document.createElement('input');
+    input.type = 'text';
+    if (placeholder) input.placeholder = placeholder;
+    if (value) input.value = value;
+    if (className) input.className = className;
+    return input;
+  }
+  static textarea(placeholder = '', value = '', className = '') {
+    let textarea = document.createElement('textarea');
+    if (placeholder) textarea.placeholder = placeholder;
+    if (value) textarea.value = value;
+    if (className) textarea.className = className;
+    return textarea;
+  }
+  static input_number(placeholder = '', step = 1, value = '', className = '') {
+    let input = document.createElement('input');
+    input.type = 'number';
+    if (step) input.step = step;
+    if (placeholder) input.placeholder = placeholder;
+    if (value) input.value = value;
+    if (className) input.className = className;
+    return input;
+  }
+  static input_search(placeholder = '', className = '', onSearch = null, onEmpty = null, searchMinLength = 2) {
+    let input = this.input_text(placeholder, '', className);
+    input.type = 'search';
+    input.addEventListener('input', () => {
+      let value = input.value;
+      if (value.length >= searchMinLength) onSearch(value);else onEmpty();
+    });
+    return input;
+  }
+  static input_password(placeholder = '', value = '', className = '') {
+    let input = this.input_text(placeholder, value, className);
+    input.type = 'password';
+    return input;
+  }
+  static button_submit(text = 'Envoyer', className = 'button button-primary') {
+    let button = document.createElement('button');
+    button.type = 'submit';
+    if (className) button.className = className;
+    if (text) button.textContent = text;
+    return button;
+  }
+  static button(text = 'Button', className = 'button', onClick = null) {
+    let button = document.createElement('div');
+    if (className) button.className = className;
+    if (text) button.textContent = text;
+    if (onClick) button.addEventListener('click', onClick);
+    return button;
+  }
+  static div(className = '') {
+    let div = document.createElement('div');
+    if (className) div.className = className;
+    return div;
+  }
+  static span(className = '') {
+    let span = document.createElement('span');
+    if (className) span.className = className;
+    return span;
+  }
+  static modal(title = '', onOpen = null, onClose = null) {
+    const modal = this.div('modal');
+    const wrapper = this.div('modal-wrapper');
+    const close = this.div('modal-close');
+    const content = this.div('modal-content');
+    let titleElement = null;
+    if (title) {
+      titleElement = this.div('modal-title');
+      titleElement.textContent = title;
+      wrapper.appendChild(titleElement);
+    }
+    wrapper.appendChild(close);
+    wrapper.appendChild(content);
+    modal.appendChild(wrapper);
+    const closeModal = () => {
+      modal.classList.remove('active');
+      if (onClose) onClose();
+    };
+    const openModal = () => {
+      modal.classList.add('active');
+      if (onOpen) onOpen();
+    };
+    close.addEventListener('click', closeModal);
+    modal.addEventListener('click', e => {
+      if (e.target === modal) closeModal();
+    });
+    return {
+      element: modal,
+      open: openModal,
+      close: closeModal,
+      title: titleElement ?? '',
+      content: content
+    };
+  }
+  static h2(content, className = '') {
+    let h2 = document.createElement('h2');
+    if (className) h2.className = className;
+    h2.textContent = content;
+    return h2;
+  }
+  static h3(content, className = '') {
+    let h3 = document.createElement('h3');
+    if (className) h3.className = className;
+    h3.textContent = content;
+    return h3;
+  }
+  static h4(content, className = '') {
+    let h4 = document.createElement('h4');
+    if (className) h4.className = className;
+    h4.textContent = content;
+    return h4;
+  }
+  static img(src, alt = '', className = '') {
+    let img = document.createElement('img');
+    img.src = src;
+    img.alt = alt ? alt : Math.random().toString(16).slice(2);
+    if (className) img.className = className;
+    return img;
+  }
+  static list(items = [], className = '', childClassName = '', onClick = null) {
+    let ul = document.createElement('ul');
+    if (className) ul.className = className;
+    items.forEach(item => {
+      let li = document.createElement('li');
+      li.innerHTML = item;
+      if (childClassName) li.className = childClassName;
+      if (onClick) li.addEventListener('click', () => {
+        onClick(item);
+      });
+      ul.appendChild(li);
+    });
+    return ul;
+  }
+  static search(placeholder = 'Rechercher...', onSearch = null, onClickItem = null, searchMinLength = 2, openBottom = false) {
+    let searchContainer = this.div('search-container');
+    let input = this.input_text(placeholder);
+    input.type = 'search';
+    let results = this.div('search-results ' + (openBottom ? ' open-bottom' : 'open-top'));
+    searchContainer.appendChild(input);
+    searchContainer.appendChild(results);
+    if (onSearch) input.addEventListener('input', () => {
+      let value = input.value;
+      if (value.length >= searchMinLength) onSearch(value, results);else results.innerHTML = '';
+    });
+    if (onClickItem) results.addEventListener('click', e => {
+      let item = e.target.closest('.result-item');
+      if (item) onClickItem(item);
+    });
+
+    //add custom event to close the search results
+    searchContainer.addEventListener('close', () => {
+      results.innerHTML = '';
+      input.value = '';
+    });
+    return {
+      searchContainer,
+      results
+    };
+  }
+  static select(options = [], value = null, className = '', onChange = null) {
+    let select = document.createElement('select');
+    if (className) select.className = className;
+
+    //if options is an array of objects, use the label and value properties, else if is simple array of values use the value as label
+    if (Array.isArray(options) && options.length > 0 && typeof options[0] === 'object') {
+      options.forEach(option => {
+        let opt = document.createElement('option');
+        opt.value = option.value;
+        opt.textContent = option.label;
+        if (value && value === option.value) opt.selected = true;
+        select.appendChild(opt);
+      });
+    } else if (Array.isArray(options) && options.length > 0) {
+      options.forEach(option => {
+        let opt = document.createElement('option');
+        opt.value = option;
+        opt.textContent = option;
+        if (value && value === option) opt.selected = true;
+        select.appendChild(opt);
+      });
+    }
+    if (onChange) select.addEventListener('change', () => {
+      onChange(select.value);
+    });
+    return select;
+  }
+}
+
+/***/ }),
+
+/***/ "../vendor/bugquest/web-framework/Assets/js/services/DebugPanel.js":
+/*!*************************************************************************!*\
+  !*** ../vendor/bugquest/web-framework/Assets/js/services/DebugPanel.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   DebugPanel: () => (/* binding */ DebugPanel)
+/* harmony export */ });
+/* harmony import */ var _framework_js_services_Builder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @framework/js/services/Builder */ "../vendor/bugquest/web-framework/Assets/js/services/Builder.js");
+/* harmony import */ var _framework_js_services_Toast__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @framework/js/services/Toast */ "../vendor/bugquest/web-framework/Assets/js/services/Toast.js");
+/* harmony import */ var _framework_js_services_Translator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @framework/js/services/Translator */ "../vendor/bugquest/web-framework/Assets/js/services/Translator.js");
+
+
+
+class DebugPanel {
+  static panel = null;
+  static isDragging = false;
+  static offset = {
+    x: 0,
+    y: 0
+  };
+  static async init() {
+    this.panel = _framework_js_services_Builder__WEBPACK_IMPORTED_MODULE_0__["default"].div('debug-panel');
+    const title = _framework_js_services_Builder__WEBPACK_IMPORTED_MODULE_0__["default"].h3('Debug Panel');
+    const close_el = _framework_js_services_Builder__WEBPACK_IMPORTED_MODULE_0__["default"].div('close-btn');
+    close_el.textContent = 'x';
+    this.panel.append(title, close_el);
+    document.body.appendChild(this.panel);
+    if (!this.panel) return;
+
+    // Restore position
+    this.restoreFromStorage();
+
+    // Toggle via touche ² (Backquote)
+    document.addEventListener('keypress', e => {
+      if (e.which === 178 || e.which === 64) {
+        this.panel.classList.toggle('active');
+        localStorage.setItem('debugPanelActive', this.panel.classList.contains('active'));
+      }
+    });
+
+    // Bouton de fermeture
+    const close = this.panel.querySelector('.close-btn');
+    if (close) {
+      close.addEventListener('click', () => {
+        this.panel.classList.remove('active');
+        localStorage.setItem('debugPanelActive', false);
+      });
+    }
+
+    // Dragging
+    this.panel.addEventListener('mousedown', this.startDrag.bind(this));
+    document.addEventListener('mousemove', this.onDrag.bind(this));
+    document.addEventListener('mouseup', this.stopDrag.bind(this));
+    await this.loadMetrics();
+    this.kvSection = _framework_js_services_Builder__WEBPACK_IMPORTED_MODULE_0__["default"].div('kv-section');
+    this.kvWrap = _framework_js_services_Builder__WEBPACK_IMPORTED_MODULE_0__["default"].div('wrap');
+    const kvTitle = _framework_js_services_Builder__WEBPACK_IMPORTED_MODULE_0__["default"].h4('Debug Infos dynamiques');
+    this.kvSection.append(kvTitle, this.kvWrap);
+    this.panel.appendChild(this.kvSection);
+    this.kvValues = {}; // pour stocker les refs HTML des valeurs
+
+    window.debugPanel = this;
+  }
+  static startDrag(e) {
+    if (!this.panel.classList.contains('active')) return;
+    this.isDragging = true;
+    this.offset.x = e.clientX - this.panel.offsetLeft;
+    this.offset.y = e.clientY - this.panel.offsetTop;
+    this.panel.classList.add('dragging');
+    this.panel.style.transition = 'none';
+  }
+  static onDrag(e) {
+    if (!this.isDragging) return;
+    const x = e.clientX - this.offset.x;
+    const y = e.clientY - this.offset.y;
+    this.panel.style.left = `${x}px`;
+    this.panel.style.top = `${y}px`;
+    this.panel.style.bottom = 'auto';
+    this.panel.style.right = 'auto';
+
+    // Sauvegarde position en direct
+    localStorage.setItem('debugPanelPosition', JSON.stringify({
+      x,
+      y
+    }));
+  }
+  static stopDrag() {
+    if (this.isDragging) {
+      this.isDragging = false;
+      this.panel.classList.remove('dragging');
+      this.panel.style.transition = '';
+    }
+  }
+  static restoreFromStorage() {
+    const isActive = localStorage.getItem('debugPanelActive');
+    this.panel.classList.toggle('active', isActive === 'true');
+    const pos = localStorage.getItem('debugPanelPosition');
+    if (!pos) return;
+    try {
+      const {
+        x,
+        y
+      } = JSON.parse(pos);
+      this.panel.style.left = `${x}px`;
+      this.panel.style.top = `${y}px`;
+      this.panel.style.bottom = 'auto';
+      this.panel.style.right = 'auto';
+    } catch (e) {
+      //set center of the screen
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      const panelWidth = this.panel.offsetWidth;
+      const panelHeight = this.panel.offsetHeight;
+      const x = (width - panelWidth) / 2;
+      const y = (height - panelHeight) / 2;
+      this.panel.style.left = `${x}px`;
+      this.panel.style.top = `${y}px`;
+      this.panel.style.bottom = 'auto';
+      this.panel.style.right = 'auto';
+    }
+  }
+  static addGroup(group_key, group) {
+    const {
+      accordeon,
+      accordeon_content
+    } = _framework_js_services_Builder__WEBPACK_IMPORTED_MODULE_0__["default"].accordion(group_key);
+    const wrap = _framework_js_services_Builder__WEBPACK_IMPORTED_MODULE_0__["default"].div('wrap');
+    accordeon_content.appendChild(wrap);
+    this.panel.appendChild(accordeon);
+    for (const item_key in group) {
+      const item = group[item_key];
+      const item_div = _framework_js_services_Builder__WEBPACK_IMPORTED_MODULE_0__["default"].div('debug-line');
+      item_div.innerHTML = `${item_key}: ${item}`;
+      wrap.appendChild(item_div);
+    }
+  }
+  static async loadMetrics() {
+    await fetch('/admin/api/debug/metrics').then(r => r.json()).then(data => {
+      if (!data) return;
+      if ("success" in data && !data.success) {
+        _framework_js_services_Toast__WEBPACK_IMPORTED_MODULE_1__.Toast.show((0,_framework_js_services_Translator__WEBPACK_IMPORTED_MODULE_2__.__)('Erreur lors du chargement des metrics:', 'admin') + ' ' + data?.message, {
+          type: 'danger',
+          icon: '❌'
+        });
+        console.error((0,_framework_js_services_Translator__WEBPACK_IMPORTED_MODULE_2__.__)('Erreur lors du chargement des metrics:', 'admin') + ' ' + data?.message);
+        return;
+      }
+      for (const group_key in data) this.addGroup(group_key, data[group_key]);
+    });
+  }
+  static updateValue(key, value) {
+    if (!this.kvValues) return;
+    if (!this.kvValues[key]) {
+      const line = _framework_js_services_Builder__WEBPACK_IMPORTED_MODULE_0__["default"].div('debug-line');
+      line.innerHTML = `<strong>${key}</strong>: <span class="debug-value">${value}</span>`;
+      this.kvWrap.appendChild(line);
+      this.kvValues[key] = line.querySelector('.debug-value');
+    } else {
+      this.kvValues[key].textContent = value;
+    }
+  }
+}
+
+/***/ }),
+
+/***/ "../vendor/bugquest/web-framework/Assets/js/services/Toast.js":
+/*!********************************************************************!*\
+  !*** ../vendor/bugquest/web-framework/Assets/js/services/Toast.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Toast: () => (/* binding */ Toast)
+/* harmony export */ });
+/* harmony import */ var _framework_js_services_Builder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @framework/js/services/Builder */ "../vendor/bugquest/web-framework/Assets/js/services/Builder.js");
+
+class Toast {
+  static containers = new Map();
+  static show(message, {
+    type = 'info',
+    position = 'top-right',
+    duration = 4000,
+    icon = null,
+    closable = true
+  } = {}) {
+    const container = this._getContainer(position);
+    const toast_el = _framework_js_services_Builder__WEBPACK_IMPORTED_MODULE_0__["default"].div(`bq-toast ${type}`);
+    if (icon) {
+      const icon_el = _framework_js_services_Builder__WEBPACK_IMPORTED_MODULE_0__["default"].div('bq-toast-icon');
+      icon_el.innerHTML = icon;
+      toast_el.appendChild(icon_el);
+    }
+    const message_el = _framework_js_services_Builder__WEBPACK_IMPORTED_MODULE_0__["default"].div('bq-toast-message');
+    message_el.innerHTML = message;
+    toast_el.appendChild(message_el);
+    if (closable) {
+      const close_el = _framework_js_services_Builder__WEBPACK_IMPORTED_MODULE_0__["default"].div('bq-toast-close');
+      close_el.innerHTML = '✖';
+      close_el.title = 'Fermer';
+      close_el.addEventListener('click', () => this._removeToast(toast_el));
+      toast_el.appendChild(close_el);
+    }
+    container.appendChild(toast_el);
+
+    // Animation d’apparition
+    requestAnimationFrame(() => {
+      toast_el.classList.add('show');
+    });
+    if (duration > 0) setTimeout(() => this._removeToast(toast_el), duration);
+  }
+  static _getContainer(position) {
+    if (!this.containers.has(position)) {
+      const container = _framework_js_services_Builder__WEBPACK_IMPORTED_MODULE_0__["default"].div(`bq-toast-container ${position}`);
+      document.body.appendChild(container);
+      this.containers.set(position, container);
+    }
+    return this.containers.get(position);
+  }
+  static _removeToast(toast) {
+    toast.classList.remove('show');
+    setTimeout(() => toast.remove(), 300);
+  }
+}
+
+/***/ }),
+
+/***/ "../vendor/bugquest/web-framework/Assets/js/services/Translator.js":
+/*!*************************************************************************!*\
+  !*** ../vendor/bugquest/web-framework/Assets/js/services/Translator.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Translator: () => (/* binding */ Translator),
+/* harmony export */   __: () => (/* binding */ __)
+/* harmony export */ });
+class Translator {
+  static _domains = {};
+  static _loaded = {};
+  static async load(domain) {
+    if (this._loaded[domain]) return;
+    try {
+      const response = await fetch(`/admin/api/locale/domain/get/${domain}`);
+      if (!response.ok) throw new Error(`Error for domain: ${domain}`);
+      const data = await response.json();
+      this._domains[domain] = data;
+      this._loaded[domain] = true;
+      return data;
+    } catch (error) {
+      console.error(`[Translator] ${error.message}`);
+    }
+    return null;
+  }
+  static async translate(key, domain = 'bugquest', replacements = {}) {
+    domain = domain.trim();
+    key = key.trim();
+    if (!this._loaded[domain]) await this.load(domain);
+    let translation = this._domains[domain]?.[key] ?? key;
+    return this._applyReplacements(translation, replacements);
+  }
+  static t(key, domain = 'bugquest', replacements = {}) {
+    let translation = this._domains[domain]?.[key] ?? key;
+    return this._applyReplacements(translation, replacements);
+  }
+  static _applyReplacements(str, replacements) {
+    return str.replace(/{(.*?)}/g, (match, token) => {
+      return replacements[token] ?? match;
+    });
+  }
+}
+function __(key, domain = 'bugquest', replacements = {}) {
+  return Translator.t(key, domain, replacements);
+}
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry needs to be wrapped in an IIFE because it needs to be in strict mode.
+(() => {
+"use strict";
+/*!**************************!*\
+  !*** ./Assets/js/app.js ***!
+  \**************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _framework_js_components_Accordion__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @framework/js/components/Accordion */ "../vendor/bugquest/web-framework/Assets/js/components/Accordion.js");
+/* harmony import */ var _framework_js_components_language_switcher__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @framework/js/components/language-switcher */ "../vendor/bugquest/web-framework/Assets/js/components/language-switcher.js");
+/* harmony import */ var _framework_js_components_language_switcher__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_framework_js_components_language_switcher__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _framework_js_services_DebugPanel__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @framework/js/services/DebugPanel */ "../vendor/bugquest/web-framework/Assets/js/services/DebugPanel.js");
+
+
+
+document.addEventListener('DOMContentLoaded', async () => {
+  await _framework_js_services_DebugPanel__WEBPACK_IMPORTED_MODULE_2__.DebugPanel.init();
+  _framework_js_components_Accordion__WEBPACK_IMPORTED_MODULE_0__.Accordion.setup();
+
+  //sleep 100ms
+  await new Promise(resolve => setTimeout(resolve, 100));
+  //call event app_loaded
+  document.dispatchEvent(new CustomEvent('bqAppLoaded'));
+  console.log('%c[App] JS chargé avec succès 🛠️', 'color: cyan; font-weight: bold');
+});
+})();
+
+/******/ })()
+;
 //# sourceMappingURL=app.js.map

@@ -1,6 +1,6 @@
-import {OptionsPage} from '@framework/js/components/options/OptionsPage';
-import {__} from '@framework/js/components/Translator';
-import BuildHelper from '@framework/js/components/BuildHelper';
+import {OptionsPage} from '@framework/js/options/OptionsPage';
+import {__} from '@framework/js/services/Translator';
+import Builder from '@framework/js/services/Builder';
 
 export class TestOptionsPage extends OptionsPage {
     constructor() {
@@ -8,7 +8,7 @@ export class TestOptionsPage extends OptionsPage {
     }
 
     render() {
-        const wrapper = BuildHelper.div('options-wrapper');
+        const wrapper = Builder.div('options-wrapper');
 
         const intBlock = this.createBlock(
             'int',
@@ -39,6 +39,19 @@ export class TestOptionsPage extends OptionsPage {
             {
                 description: __('Une chaîne de texte modifiable', 'admin'),
                 placeholder: __('Entrez du texte...', 'admin'),
+            },
+            'test'
+        );
+
+        const passwordBlock = this.createBlock(
+            'string',
+            'test_password_value',
+            __('Mot de passe', 'admin'),
+            null,
+            {
+                isPassword: true,
+                description: __('Un mot de passe sécurisé', 'admin'),
+                placeholder: __('Entrez votre mot de passe...', 'admin'),
             },
             'test'
         );
@@ -83,14 +96,28 @@ export class TestOptionsPage extends OptionsPage {
             'test'
         );
 
+        const textareaBlock = this.createBlock(
+            'textarea',
+            'test_textarea_value',
+            __('Zone de texte', 'admin'),
+            null,
+            {
+                description: __('Une zone de texte pour des entrées longues', 'admin'),
+                placeholder: __('Entrez votre texte ici...', 'admin'),
+            },
+            'test'
+        );
+
         // Ajout à l'interface
         [
             intBlock,
             floatBlock,
             stringBlock,
+            passwordBlock,
             boolBlock,
             selectBlock,
             mediaBlock,
+            textareaBlock
         ].forEach(block => block.render(wrapper));
 
         this.container.appendChild(wrapper);
