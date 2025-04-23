@@ -79,6 +79,20 @@ export class TestOptionsPage extends OptionsPage {
             }
         );
 
+        const urlBlock = this.createBlock(
+            'url',
+            'test_url_value',
+            __('Sélectionner une URL', 'admin'),
+            {
+                url: '',
+                title: '',
+                blank: false
+            },
+            {
+                description: __('Choisissez une URL', 'admin'),
+            }
+        );
+
         const mediaBlock = this.createBlock(
             'media',
             'test_media_value',
@@ -191,6 +205,7 @@ export class TestOptionsPage extends OptionsPage {
             [
                 boolBlock,
                 selectBlock,
+                urlBlock
             ]
         ).render(this.container);
 
