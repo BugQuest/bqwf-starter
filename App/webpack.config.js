@@ -9,7 +9,6 @@ module.exports = {
     entry: {
         'css/app': '@/scss/app.scss',
         'js/app': '@/js/app.js',
-        'js/admin/admin-options-test': '@/js/admin-options-test.js',
     },
     resolve: {
         alias: {
