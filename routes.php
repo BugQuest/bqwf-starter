@@ -3,7 +3,7 @@
 use App\Controllers\DocController;
 use App\Controllers\HomeController;
 use App\Controllers\PageController;
-use BugQuest\Framework\Middleware\PopulateAuthMiddleware;
+use BugQuest\Framework\Middlewares\PopulateAuthMiddleware;
 use BugQuest\Framework\Models\Route;
 use BugQuest\Framework\Models\RouteGroup;
 use BugQuest\Framework\Services\View;
