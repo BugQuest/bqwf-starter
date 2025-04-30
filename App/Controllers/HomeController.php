@@ -20,6 +20,6 @@ class HomeController
                 'breadcrumbs' => PageService::getCurrent()?->breadcrumbs(),
             ]);
         }
-        return Response::view('@app/home.twig');
+        return Response::view('@app/doc/cache.twig');
     }
 }
