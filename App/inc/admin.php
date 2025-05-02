@@ -103,10 +103,11 @@ Hooks::addAction('kernel.after.inc', function () {
 //select multiple
     $page->registerBlock(
         new OptionBlock(
-            type: 'select_multiple',
+            type: 'select',
             key: 'test_select_multiple_value',
             label: __("Sélectionnez une ou plusieurs options", 'test', 'fr'),
             options: [
+                'isMultiple' => true,
                 'description' => __("Sélectionnez une ou plusieurs options dans la liste", 'test', 'fr'),
                 'options' => [
                     ['value' => 'alpha', 'label' => 'Alpha'],
