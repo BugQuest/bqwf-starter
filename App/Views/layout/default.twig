@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}BugQuest — Le framework PHP moderne{% endblock %}</title>
+    {{ bq_hook_action('meta') }}
     {{ bq_assets_header('app') }}
 </head>
 <body>
